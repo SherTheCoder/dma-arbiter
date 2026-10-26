@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
 
+env:
+  OSS_CAD_SUITE: '2026-10-26'
+
 jobs:
   lint:
     runs-on: ubuntu-24.04
@@ -11,9 +14,23 @@ jobs:
       - uses: actions/checkout@v7
       - uses: YosysHQ/setup-oss-cad-suite@v4
         with:
-          version: '2026-10-26'
+          version: ${{ env.OSS_CAD_SUITE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: make lint
+
+  synth:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: YosysHQ/setup-oss-cad-suite@v4
+        with:
+          version: ${{ env.OSS_CAD_SUITE }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: make synth
+      - uses: actions/upload-artifact@v7
+        with:
+          name: synth
+          path: build/synth/
 
   unit:
     runs-on: ubuntu-24.04
@@ -21,11 +38,65 @@ jobs:
       - uses: actions/checkout@v7
       - uses: YosysHQ/setup-oss-cad-suite@v4
         with:
-          version: '2026-10-26'
+          version: ${{ env.OSS_CAD_SUITE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - run: pip install -r requirements.txt
       - run: make unit
-      - run: make -C tb
+
+  regress:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        part: [directed, '0', '1', '2', '3']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: YosysHQ/setup-oss-cad-suite@v4
+        with:
+          version: ${{ env.OSS_CAD_SUITE }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: run
+        run: |
+          if [ "${{ matrix.part }}" = directed ]; then
+            python scripts/run_regression.py --directed
+          else
+            python scripts/run_regression.py --seeds 0:1000 --shard ${{ matrix.part }}/4
+          fi
+      - if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: regress-${{ matrix.part }}
+          path: |
+            build/regress/*.json
+            build/regress/*/results_*.jsonl
+            build/regress/*/cov_*.yml
+            build/regress/*/vcov_*.dat
+            build/regress/*/fail_*
+
+  coverage:
+    needs: regress
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - run: pip install pyyaml==6.0.3
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: regress-*
+          path: build/regress
+          merge-multiple: true
+      - run: python scripts/merge_coverage.py build/regress build/cov
+      - if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage
+          path: build/cov/
