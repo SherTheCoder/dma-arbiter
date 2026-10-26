@@ -1,0 +1,14 @@
+# cycles. These are model parameters, not measurements of STM32N6 silicon.
+base_latency:
+  MEM: 2        # on-chip SRAM behind a short interconnect
+  PERIPH: 2     # APB bridge synchronization
+beat_interval:
+  MEM: 1        # SRAM streams a word per cycle
+  PERIPH: 2     # APB setup and access phase per word, no bursts
+path_penalty:
+  P0:
+    PERIPH: 0   # port 0 owns the direct bridge path (AN5593 2.3)
+    MEM: 3      # crosses the bus matrix
+  P1:
+    MEM: 0      # port 1 is the memory port
+    PERIPH: 3   # crosses the bus matrix to the bridge
