@@ -5,6 +5,16 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: YosysHQ/setup-oss-cad-suite@v4
+        with:
+          version: '2026-10-26'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: make lint
+
   unit:
     runs-on: ubuntu-24.04
     steps:
@@ -18,3 +28,4 @@ jobs:
           python-version: '3.11'
       - run: pip install -r requirements.txt
       - run: make unit
+      - run: make -C tb
