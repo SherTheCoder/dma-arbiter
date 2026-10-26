@@ -114,6 +114,62 @@ and the max at 16.7%, ch_done +1 gives 0.1% mean. So it's exact because nothing 
 random once back-pressure is off and the model walks the same pipeline, not because
 the check is blind. With back-pressure on it would drift, it doesn't model stalls at all.
 
+## mapping experiment
+
+Metrics as set before running anything: throughput = beats written / (last ch_done - first
+load), burst latency = last write beat - the cycle that burst's read request went up
+(the load edge for a descriptor's first burst, else the channel's previous last write
+beat). 10 seeds per point, which only move start offsets 0-64, and they're paired: seed k
+has the same offsets balanced and inverted.
+
+2026-10-27  E1/E2 at the default fabric (cross-path penalty 3):
+
+- E1, 2 RX + 1 TX: inverting TX loses 23.3% throughput (0.363 -> 0.279 beats/cycle), TX
+  worst burst latency x1.34, worst RX x1.43.
+- E2, plus 5 background channels: 11.6% (0.397 -> 0.352), TX x1.10, RX x1.04.
+
+I expected it to get worse once the other channels got busy. It halves. The peripheral
+bridge is the bottleneck: busy 82% of the window in balanced E1 and 86% in E2 (counting
+first-beat latency as busy). Inverted, TX bursts hold it 3 cycles longer each, and the
+bridge also sits idle more (70% busy in inverted E1) because the two ports now wait on
+each other. In E2 TX is only 13% of the bridge's work, so the same per-burst cost is a
+smaller slice of the total.
+
+E3 sweep, loss in %, rows are background channels, columns cross-path penalty:
+
+```
+        0     1     2     3     4     6     8
+bg0  10.8  15.4  19.5  23.3  26.7  32.6  37.7
+bg2   7.6  10.8  13.6  16.4  19.0  23.8  28.0
+bg5   5.3   7.5   9.6  11.6  13.5  17.0  20.3
+```
+
+Inverted never beat balanced, at any point or seed.
+
+Sanity check at penalty 0 and no background: still 10.8%. With no penalty the only
+change is which port talks to which target. Balanced, port 0 only ever talks to PERIPH and
+port 1 only to MEM, so a burst never waits for a target (0.00 cycles on average).
+Inverted, both ports touch both targets, a burst waits 2.5 cycles on average for the
+target the other port has, and its port can't do anything else meanwhile since it's
+one transaction per port. So close to half of the 23.3% at the default penalty is just
+from the ports sharing targets, not from the slower path.
+
+## mutation testing
+
+2026-10-27  while writing m04 (full flag one entry late) I noticed A4 as first written,
+`push |-> !full` on the fifo's own `full` output, could never catch it. A late flag stays
+low on the push that overflows, so it vouches for itself. The checker now works out full
+and empty from `count` and the property is the same. It's a gap in my checker, not an RTL
+bug, so it doesn't go in the list below.
+
+Also made the test stop at the first scoreboard error instead of running to the
+watchdog. m09 used to sit there for 50 cycles a beat on every seed.
+
+First run: 10/10 killed, each by the check it was aimed at, so all six assertions have
+killed something. m06 (cmd_addr moving while cmd_ready is low) gets past all the
+directed tests on the depth-4 build because none of them stall cmd_ready, it took
+random seed 1 (light back-pressure) to see it.
+
 ## bugs hit along the way
 
 (none yet)
