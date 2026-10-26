@@ -74,6 +74,27 @@ A = cmd accepted, s = service starts, r/w = data beats
 21 edges per burst, so 16 beats take 84 and ch_done shows at 85, which is what the
 scoreboard prints for smoke_m2p.
 
+## random stimulus
+
+How I read a couple of the constraint lines:
+
+- Every scenario queues descriptors per channel until it has 100 port transactions, so
+  channels get reloaded in all of them. The 30% "reload after ch_done" scenarios give
+  every follow-on descriptor a start delay of 0, so it goes in the cycle after ch_done.
+  The rest wait a fresh 0-200 cycles after the previous ch_done.
+- A delay-0 reload gets parked on the cfg bus while its channel is still busy, so the
+  driver really does sit on cfg_ready (cfg.wait coverpoint). Before that change
+  cfg_valid never saw cfg_ready low.
+- "20% of descriptors aren't a multiple of the burst": a tail needs burst > 1, so when
+  the tail coin comes up with burst 1 I redraw the burst from 2-16.
+- Depth 2 is every 5th seed (seed % 5 == 4), 200 of the 1000.
+
+## regression log
+
+2026-10-27  first full run, 1000/1000 seeds and the 9 directed tests pass, 181,108 port
+transactions from the random seeds. Main cross 128/128, thinnest bin (ch7, p1, wr, 9-16)
+with 327 hits. Requesters at a grant never went above 4.
+
 ## bugs hit along the way
 
 (none yet)
