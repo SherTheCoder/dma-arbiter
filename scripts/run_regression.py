@@ -21,6 +21,8 @@ import yaml
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TB = os.path.join(ROOT, "tb")
 CFG = yaml.safe_load(open(os.path.join(ROOT, "config", "regression.yaml")))
+# cocotb tests that take their seeds from SEEDS
+SEEDED = ("rand", "sai")
 
 
 def depth_for(test, seed):
@@ -61,7 +63,7 @@ def read_results(path):
     return got
 
 
-def run_batch(out, depth, items, tag, rtl=None, stop_on_fail=False):
+def run_batch(out, depth, items, tag, rtl=None, stop_on_fail=False, more=None):
     """items are (test, seed) in the order cocotb will run them."""
     results = os.path.join(out, f"results_{tag}.jsonl")
     log = os.path.join(out, f"{tag}.log")
@@ -70,15 +72,16 @@ def run_batch(out, depth, items, tag, rtl=None, stop_on_fail=False):
     todo = list(items)
     n = 0
     while todo:
-        directed = [t for t, _ in todo if t != "rand"]
-        seeds = [s for t, s in todo if t == "rand"]
+        names = list(dict.fromkeys(t for t, _ in todo))
+        seeds = sorted({s for t, s in todo if t in SEEDED})
         env = dict(DEPTH=depth, SIM_BUILD=sim_build(out, depth), RESULTS=results,
                    COV=os.path.join(out, f"cov_{tag}_{n}.yml"),
                    VCOV=os.path.join(out, f"vcov_{tag}_{n}.dat"),
-                   COCOTB_RESULTS_FILE=os.path.join(out, f"{tag}_{n}.xml"), **extra)
+                   COCOTB_RESULTS_FILE=os.path.join(out, f"{tag}_{n}.xml"), **extra, **(more or {}))
         if seeds:
             env["SEEDS"] = ",".join(map(str, seeds))
-        make(log, f"TEST={'|'.join(directed + (['rand'] if seeds else []))}", **env)
+        # \b so "sai" doesn't also pick up sai_balanced
+        make(log, "TEST=" + "|".join(t + "\\b" for t in names), **env)
         n += 1
         got = read_results(results)
         missing = [i for i in todo if i not in got]
@@ -93,21 +96,21 @@ def run_batch(out, depth, items, tag, rtl=None, stop_on_fail=False):
     return [got.get(i) for i in items], crashed
 
 
-def confirm(out, depth, test, seed, rtl=None):
+def confirm(out, depth, test, seed, rtl=None, more=None):
     """Rerun one failure alone, with an FST dump. True if it fails again."""
     name = f"fail_{test}_{seed}"
     results = os.path.join(out, name + ".jsonl")
     extra = {"RTL_DIR": rtl} if rtl else {}
-    make(os.path.join(out, name + ".log"), f"TEST={test}", WAVES=1,
+    make(os.path.join(out, name + ".log"), f"TEST={test}\\b", WAVES=1,
          WAVE_FILE=os.path.join(out, name + ".fst"), DEPTH=depth,
          SIM_BUILD=sim_build(out, depth), RESULTS=results,
          COCOTB_RESULTS_FILE=os.path.join(out, name + ".xml"),
-         **({"SEEDS": seed} if test == "rand" else {"SEED": seed}), **extra)
+         **({"SEEDS": seed} if test in SEEDED else {"SEED": seed}), **extra, **(more or {}))
     r = read_results(results).get((test, seed))
     return r is None or not r["ok"]
 
 
-def run(out, items, rtl=None, stop_on_fail=False, waves=True):
+def run(out, items, rtl=None, stop_on_fail=False, waves=True, more=None):
     """Run (test, seed) items on whichever builds they need. Returns a summary dict."""
     os.makedirs(out, exist_ok=True)
     summary = {"items": len(items), "passed": 0, "failed": [], "confirmed": [], "txns": 0, "cycles": 0,
@@ -117,7 +120,7 @@ def run(out, items, rtl=None, stop_on_fail=False, waves=True):
         if not mine:
             continue
         build(out, depth, rtl)
-        res, crashed = run_batch(out, depth, mine, f"d{depth}", rtl, stop_on_fail)
+        res, crashed = run_batch(out, depth, mine, f"d{depth}", rtl, stop_on_fail, more)
         for item, r in zip(mine, res):
             if r and r["ok"]:
                 summary["passed"] += 1
@@ -132,7 +135,7 @@ def run(out, items, rtl=None, stop_on_fail=False, waves=True):
             break
     if waves:
         for test, seed in summary["failed"]:
-            if confirm(out, depth_for(test, seed), test, seed, rtl):
+            if confirm(out, depth_for(test, seed), test, seed, rtl, more):
                 summary["confirmed"].append([test, seed])
     return summary
 
