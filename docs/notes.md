@@ -172,4 +172,8 @@ random seed 1 (light back-pressure) to see it.
 
 ## bugs hit along the way
 
-(none yet)
+None. Neither the scoreboard nor an assertion ever fired on the real RTL, in the directed
+tests or the 1000 seeds. What did break along the way was all testbench and scripts, which
+don't count: the fifo unit test first checked a cycle late, `export SEEDS` in the tb
+makefile handed the test an empty string, the regression runner wrote results relative to
+tb/ and then couldn't find them, and the A4 checker gap above.
