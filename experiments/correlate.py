@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [ROOT, os.path.join(ROOT, "scripts")]
 import run_regression as rr
+from mapping import BAL, INK, INK2, SURFACE, style
 from models.perf_model import predict
 
 # fifo_full is left out: it's heavy back-pressure by definition and the model assumes none
@@ -95,18 +96,20 @@ def main():
 
     rtl = np.array([r["rtl"] for r in rows])
     mod = np.array([r["model"] for r in rows])
-    fig, ax = plt.subplots(figsize=(5, 5))
-    ax.scatter(rtl, mod, s=10, alpha=0.6)
+    fig, ax = plt.subplots(figsize=(5, 5), facecolor=SURFACE)
+    style(ax)
+    ax.grid(axis="x", color="#e4e3df", lw=0.8)
     lim = [rtl.min() * 0.8, rtl.max() * 1.2]
-    ax.plot(lim, lim, "k--", lw=1, label="y = x")
+    ax.plot(lim, lim, color=INK2, lw=1, ls="--", label="y = x")
+    ax.scatter(rtl, mod, s=16, color=BAL, edgecolors=SURFACE, linewidths=0.8, label="scenario")
     ax.set_xscale("log")
     ax.set_yscale("log")
-    ax.set_xlabel("RTL total cycles")
-    ax.set_ylabel("model total cycles")
-    ax.set_title(f"{len(rows)} held-out scenarios, max error {100 * errs.max():.2f}%")
-    ax.legend()
+    ax.set_xlabel("RTL total cycles", color=INK2)
+    ax.set_ylabel("model total cycles", color=INK2)
+    ax.set_title(f"{len(rows)} held-out scenarios, max error {100 * errs.max():.2f}%", color=INK, fontsize=10)
+    ax.legend(frameon=False, fontsize=9)
     fig.tight_layout()
-    fig.savefig(os.path.join(a.results, "correlation.png"), dpi=120)
+    fig.savefig(os.path.join(a.results, "correlation.png"), dpi=130, facecolor=SURFACE)
 
     t = out["total_cycle_error"]
     print(f"{len(rows)} scenarios: total-cycle error mean {100 * t['mean']:.2f}%, p95 {100 * t['p95']:.2f}%, "
