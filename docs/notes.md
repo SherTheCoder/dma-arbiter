@@ -95,6 +95,16 @@ How I read a couple of the constraint lines:
 transactions from the random seeds. Main cross 128/128, thinnest bin (ch7, p1, wr, 9-16)
 with 327 hits. Requesters at a grant never went above 4.
 
+## perf model
+
+models/perf_model.py steps edge by edge through the same handoffs as the table above, with
+the fabric rules from the yaml. It assumes no back-pressure.
+
+2026-10-27  calibration on the directed tests (all but fifo_full, which is heavy
+back-pressure on purpose): with the delays straight from the table it matched every one
+to the cycle, totals and per-burst latency, so nothing needed tuning. Frozen at tag
+`perf-model-v1` before looking at any held-out scenario.
+
 ## bugs hit along the way
 
 (none yet)
