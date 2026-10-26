@@ -34,7 +34,8 @@ class DmaTest(uvm_test):
         clk = cocotb.top.clk
         limit = 50 * sum(d.beats for d in scn.descs) + 10_000
         timeout = ClockCycles(clk, limit)
-        if await First(self.env.sb.all_done.wait(), timeout) is timeout:
+        # stop at the first scoreboard error, no point running a broken scenario to the watchdog
+        if await First(self.env.sb.all_done.wait(), self.env.sb.failed.wait(), timeout) is timeout:
             busy = int(cocotb.top.ch_busy.value)
             chans = [c for c in range(8) if busy >> c & 1]
             self.env.sb.error(6, f"watchdog: not done after {limit} cycles, busy channels {chans}")

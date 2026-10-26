@@ -30,6 +30,7 @@ class Scoreboard(uvm_scoreboard):
         self.dones = Counter()
         self.left = len(descs)
         self.all_done = Event()
+        self.failed = Event()
         if not descs:
             self.all_done.set()
 
@@ -43,6 +44,7 @@ class Scoreboard(uvm_scoreboard):
 
     def error(self, check, msg):
         self.errors.append(f"check {check}: {msg}")
+        self.failed.set()
         if len(self.errors) <= 5:
             self.logger.error(f"check {check}: {msg}")
 
