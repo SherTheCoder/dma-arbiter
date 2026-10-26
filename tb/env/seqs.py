@@ -21,8 +21,9 @@ def periph(ch, off=0):
 
 
 class Scenario:
-    def __init__(self, name, seed, descs, bp="none", depth=4, fabric=None):
+    def __init__(self, name, seed, descs, bp="none", depth=4, fabric=None, params=None):
         self.name = name
+        self.params = params or {}
         self.seed = seed
         self.descs = descs
         self.bp = bp
@@ -80,7 +81,7 @@ def reload(seed):
     return Scenario("reload", seed, [desc(3, k, 20, 8) for k in ("M2P", "P2M", "M2M", "M2P")])
 
 
-def sai(seed, inverted, bg=0, beats=2048, fabric=None, name=None):
+def sai(seed, inverted, bg=0, beats=2048, fabric=None, name="sai"):
     """2 RX (P2M) and 1 TX (M2P), burst 4, plus up to 5 balanced background channels, burst 8.
 
     The seed only moves descriptor start offsets, 0 to 64 cycles.
@@ -93,8 +94,9 @@ def sai(seed, inverted, bg=0, beats=2048, fabric=None, name=None):
         descs.append(desc(3 + i, "P2M" if i % 2 == 0 else "M2P", beats, 8))
     for d in descs:
         d.delay = rng.randint(0, 64)
-    name = name or f"sai_{'inv' if inverted else 'bal'}_bg{bg}"
-    return Scenario(name, seed, descs, fabric=fabric)
+    fabric = fabric or load_fabric()
+    params = {"map": "inv" if inverted else "bal", "bg": bg, "pen": fabric["path_penalty"]["P0"]["MEM"]}
+    return Scenario(name, seed, descs, fabric=fabric, params=params)
 
 
 DIRECTED = {

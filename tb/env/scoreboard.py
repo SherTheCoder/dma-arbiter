@@ -138,8 +138,8 @@ class Scoreboard(uvm_scoreboard):
         dump = os.environ.get("DUMP")
         if dump:
             with open(dump, "a") as f:
-                f.write(json.dumps({"name": scn.name, "seed": scn.seed, "depth": scn.depth,
-                                    "fabric": scn.fabric, "ok": not self.errors,
+                f.write(json.dumps({"name": scn.name, "seed": scn.seed, "depth": scn.depth, "bp": scn.bp,
+                                    "params": scn.params, "fabric": scn.fabric, "ok": not self.errors,
                                     "descs": [d.to_dict() for d in scn.descs],
                                     "loads": self.loads, "dones": self.done_log,
                                     "txns": self.log}) + "\n")

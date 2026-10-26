@@ -51,7 +51,10 @@ class DirectedTest(DmaTest):
 
 class RandTest(DmaTest):
     def scenario(self):
-        return seqs.rand_scenario(self.seed, int(os.environ.get("DEPTH", 4)))
+        scn = seqs.rand_scenario(self.seed, int(os.environ.get("DEPTH", 4)))
+        # the performance runs force back-pressure off
+        scn.bp = os.environ.get("BP") or scn.bp
+        return scn
 
 
 class SaiTest(DmaTest):

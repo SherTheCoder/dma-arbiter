@@ -11,7 +11,7 @@ VERILOG_SOURCES = $(addprefix $(RTL_DIR)/, dma_pkg.sv rr_arbiter.sv sync_fifo.sv
 TEST ?= smoke
 DEPTH ?= 4
 SEED ?= 1
-export SEED SEEDS DEPTH MAP BG PEN RESULTS DUMP COV
+export SEED SEEDS DEPTH MAP BG PEN BP RESULTS DUMP COV
 export PYTHONPATH := $(ROOT):$(ROOT)/tb:$(PYTHONPATH)
 
 COCOTB_TOPLEVEL = dma_arbiter_top
