@@ -46,6 +46,7 @@ def sim_build(out, depth):
 
 
 def build(out, depth, rtl=None):
+    os.makedirs(out, exist_ok=True)
     sb = sim_build(out, depth)
     extra = {"RTL_DIR": rtl} if rtl else {}
     rc = make(os.path.join(out, f"build_d{depth}.log"), os.path.join(sb, "Vtop"),

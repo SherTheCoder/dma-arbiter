@@ -37,4 +37,14 @@ cov:
 perf:
 	python experiments/correlate.py
 
-.PHONY: lint synth unit test regress cov perf
+experiments:
+	python experiments/mapping.py
+	python experiments/sweep.py
+
+mutate:
+	python mutations/run_mutations.py
+
+results:
+	python scripts/summarize.py
+
+.PHONY: lint synth unit test regress cov perf experiments mutate results

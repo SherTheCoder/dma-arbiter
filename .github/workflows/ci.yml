@@ -100,3 +100,55 @@ jobs:
         with:
           name: coverage
           path: build/cov/
+
+  summary:
+    needs: [synth, coverage]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: regress-*
+          path: build/regress
+          merge-multiple: true
+      - uses: actions/download-artifact@v8
+        with:
+          name: synth
+          path: build/synth
+      - uses: actions/download-artifact@v8
+        with:
+          name: coverage
+          path: results
+      # perf, experiment and mutation numbers are the committed ones from the last full run
+      - run: python scripts/summarize.py
+      - uses: actions/upload-artifact@v7
+        with:
+          name: summary
+          path: results/summary.json
+
+  perf:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: YosysHQ/setup-oss-cad-suite@v4
+        with:
+          version: ${{ env.OSS_CAD_SUITE }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - run: make perf experiments
+      - uses: actions/upload-artifact@v7
+        with:
+          name: perf
+          path: |
+            results/correlation.*
+            results/mapping.json
+            results/sweep.json
+            results/*.png
