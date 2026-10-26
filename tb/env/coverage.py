@@ -69,6 +69,11 @@ def sample_tail(tail):
     pass
 
 
+@CoverPoint("cfg.wait", xf=lambda n: "0" if n == 0 else "1-10" if n <= 10 else "11+", bins=["0", "1-10", "11+"])
+def sample_cfg_wait(n):
+    pass
+
+
 class Coverage(uvm_subscriber):
     def build_phase(self):
         self.desc_imp = uvm_subscriber.uvm_AnalysisImp("desc_imp", self, self.on_load)
@@ -84,7 +89,9 @@ class Coverage(uvm_subscriber):
                 sample_r_gap(g)
 
     def on_load(self, x):
-        d, _ = x
+        d, now = x
+        # cycles cfg_valid sat there with cfg_ready low
+        sample_cfg_wait(now - d.presented - 1)
         if d.mapping():
             sample_mapping(d.mapping())
         sample_tail(d.beats % d.burst != 0)

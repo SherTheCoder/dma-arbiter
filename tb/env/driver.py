@@ -10,7 +10,9 @@ from env.clk import cycle
 class CfgDriver(uvm_driver):
     """Loads descriptors through cfg_*. Each channel works through its own queue:
     the first descriptor waits `delay` cycles from the start, later ones wait
-    `delay` cycles after the channel's previous ch_done."""
+    `delay` cycles after the channel's previous ch_done. A back-to-back reload
+    (delay 0) can be put on the bus while its channel is still busy and sit
+    there until cfg_ready comes up."""
 
     def build_phase(self):
         self.ap = uvm_analysis_port("ap", self)
@@ -32,6 +34,10 @@ class CfgDriver(uvm_driver):
         for ch in sorted(self.queue):
             q = self.queue[ch]
             if q and ch not in self.busy and now >= self.free_at.get(ch, self.t0) + q[0].delay:
+                return q.popleft()
+        for ch in sorted(self.queue):
+            q = self.queue[ch]
+            if q and ch in self.busy and q[0].delay == 0:
                 return q.popleft()
         return None
 
@@ -59,6 +65,7 @@ class CfgDriver(uvm_driver):
                         self.more.clear()
                         await self.more.wait()
                     continue
+                cur.presented = now
                 dut.cfg_valid.value = 1
                 dut.cfg_ch.value = cur.ch
                 dut.cfg_src_addr.value = cur.src
