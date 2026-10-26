@@ -17,6 +17,15 @@ in the module header and not in the body either. Rather than spell out `dma_pkg:
 every enum I use the yosys-slang frontend that ships in the same OSS CAD Suite build
 (`yosys -m slang`, `read_slang`).
 
+## covers
+
+`c_all_req` (all 8 channels requesting one port) can't fire. A grant needs room in the fifo,
+and while the fifo is full its DEPTH entries plus the issue register are DEPTH+1 channels
+that aren't requesting. So the most requesters a port ever sees is about 8 - DEPTH, 4 with
+the default fifo and 6 with depth 2. Same reason the 7 and 8 bins of the requesters
+coverpoint stay empty. I left the cover in anyway since it's the obvious thing to ask for, and
+added `c_four_req` which does fire.
+
 ## handoff delays
 
 All in clock edges, from what the channel and port master do, checked against the
