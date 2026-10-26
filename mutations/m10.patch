@@ -1,0 +1,13 @@
+--- a/rtl/dma_arbiter_top.sv
++++ b/rtl/dma_arbiter_top.sv
+@@ -112,8 +112,8 @@
+       .gnt         (gnt0[i] || gnt1[i]),
+       .rd_done     ((rd_done0 && hit0) || (rd_done1 && hit1)),
+       .wr_done     ((wr_done0 && hit0) || (wr_done1 && hit1)),
+-      .buf_we      ((we0 && hit0) || (we1 && hit1)),
+-      .buf_wdata   (we0 && hit0 ? wd0 : wd1),
++      .buf_we      ((we0 && id0 + ID_W'(1) == ID_W'(i)) || (we1 && id1 + ID_W'(1) == ID_W'(i))),
++      .buf_wdata   (we0 && id0 + ID_W'(1) == ID_W'(i) ? wd0 : wd1),
+       .buf_re      ((re0 && hit0) || (re1 && hit1)),
+       .buf_rdata   (ch_word[i])
+     );

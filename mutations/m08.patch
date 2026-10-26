@@ -1,0 +1,11 @@
+--- a/rtl/dma_channel.sv
++++ b/rtl/dma_channel.sv
+@@ -90,7 +90,7 @@
+         end
+         RD_REQ: if (gnt) state <= RD_WAIT;
+         RD_WAIT: if (rd_done) begin
+-          if (src_inc) src_addr <= src_addr + (ADDR_W'(len) << ASH);
++          if (1'b0) src_addr <= src_addr + (ADDR_W'(len) << ASH);
+           state <= WR_REQ;
+         end
+         WR_REQ: if (gnt) state <= WR_WAIT;

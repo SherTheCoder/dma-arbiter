@@ -1,0 +1,11 @@
+--- a/rtl/port_master.sv
++++ b/rtl/port_master.sv
+@@ -100,7 +100,7 @@
+ 
+   assign cmd_valid = state == P_CMD;
+   assign wvalid    = state == P_WDATA;
+-  assign wlast     = wvalid && beats_left == LEN_W'(1);
++  assign wlast     = wvalid && beats_left <= LEN_W'(2);
+   assign wdata     = buf_rdata;
+   assign rready    = state == P_RDATA;
+ 

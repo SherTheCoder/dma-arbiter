@@ -1,0 +1,11 @@
+--- a/rtl/rr_arbiter.sv
++++ b/rtl/rr_arbiter.sv
+@@ -18,7 +18,7 @@
+   always_comb begin
+     gnt = '0;
+     if (accept) begin
+-      if (|mreq) gnt = mreq & -mreq;
++      if (|mreq) gnt = (mreq & -mreq) | (req & -req);
+       else       gnt = req & -req;
+     end
+   end

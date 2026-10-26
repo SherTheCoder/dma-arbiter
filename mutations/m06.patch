@@ -1,0 +1,12 @@
+--- a/rtl/port_master.sv
++++ b/rtl/port_master.sv
+@@ -84,7 +84,8 @@
+           {cmd_write, cmd_addr, cmd_len, cmd_inc, cmd_id} <= fifo_dout;
+           state <= P_CMD;
+         end
+-        P_CMD: if (cmd_ready) begin
++        P_CMD: if (!cmd_ready) cmd_addr <= cmd_addr + ADDR_W'(4);
++        else begin
+           beats_left <= cmd_len;
+           state      <= cmd_write ? P_WDATA : P_RDATA;
+         end

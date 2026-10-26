@@ -1,0 +1,13 @@
+Each patch applies to a copy of rtl/ (patch -p1). run_mutations.py runs the directed
+tests and seeds 0-99 against every one and expects a failure.
+
+m01 arbiter pointer never advances              should hit A3
+m02 extra grant when two channels request       should hit A1
+m03 grant to a channel that isn't requesting    should hit A2
+m04 fifo full flag one entry late               should hit A4
+m05 issue fsm pops an empty fifo                should hit A5
+m06 cmd_addr moves while waiting on cmd_ready   should hit A6
+m07 wlast one beat early                        scoreboard
+m08 source address never increments             scoreboard
+m09 tail burst rounded up to a full burst       scoreboard
+m10 read data routed to channel id + 1          scoreboard

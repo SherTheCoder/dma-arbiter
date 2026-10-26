@@ -1,0 +1,11 @@
+--- a/rtl/sync_fifo.sv
++++ b/rtl/sync_fifo.sv
+@@ -21,7 +21,7 @@
+   logic [PW-1:0] wr_ptr, rd_ptr;
+ 
+   assign dout  = mem[rd_ptr];
+-  assign full  = count == CW'(DEPTH);
++  assign full  = count == CW'(DEPTH + 1);
+   assign empty = count == '0;
+ 
+   function automatic logic [PW-1:0] next_ptr(input logic [PW-1:0] p);

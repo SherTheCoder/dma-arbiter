@@ -1,0 +1,11 @@
+--- a/rtl/port_master.sv
++++ b/rtl/port_master.sv
+@@ -52,7 +52,7 @@
+   logic             pop, empty;
+   logic [LEN_W-1:0] beats_left;
+ 
+-  assign pop = state == P_IDLE && !empty;
++  assign pop = state == P_IDLE;
+ 
+   // count is only looked at by coverage
+   /* verilator lint_off PINCONNECTEMPTY */

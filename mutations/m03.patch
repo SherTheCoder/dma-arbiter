@@ -1,0 +1,11 @@
+--- a/rtl/rr_arbiter.sv
++++ b/rtl/rr_arbiter.sv
+@@ -19,7 +19,7 @@
+     gnt = '0;
+     if (accept) begin
+       if (|mreq) gnt = mreq & -mreq;
+-      else       gnt = req & -req;
++      else       gnt = (req | mask) & -(req | mask);
+     end
+   end
+ 

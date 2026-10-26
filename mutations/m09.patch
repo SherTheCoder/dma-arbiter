@@ -1,0 +1,11 @@
+--- a/rtl/dma_channel.sv
++++ b/rtl/dma_channel.sv
+@@ -52,7 +52,7 @@
+   logic [BW-1:0]      fill_ptr, drain_ptr;
+ 
+   // the last burst carries whatever is left
+-  assign len = beats_left < BEATS_W'(burst) ? LEN_W'(beats_left) : burst;
++  assign len = burst;
+ 
+   assign idle      = state == IDLE;
+   assign done      = state == DONE;

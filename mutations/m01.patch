@@ -1,0 +1,11 @@
+--- a/rtl/rr_arbiter.sv
++++ b/rtl/rr_arbiter.sv
+@@ -25,7 +25,7 @@
+ 
+   always_ff @(posedge clk)
+     if (!rst_n)    mask <= '0;
+-    else if (|gnt) mask <= ~(gnt | (gnt - N'(1)));
++    else if (1'b0) mask <= ~(gnt | (gnt - N'(1)));
+ 
+ endmodule
+ 
