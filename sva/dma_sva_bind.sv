@@ -7,13 +7,12 @@ bind rr_arbiter arb_sva #(.N(N)) u_arb_sva (
   .gnt  (gnt)
 );
 
-bind sync_fifo fifo_sva u_fifo_sva (
+bind sync_fifo fifo_sva #(.DEPTH(DEPTH)) u_fifo_sva (
   .clk  (clk),
   .rst_n(rst_n),
   .push (push),
   .pop  (pop),
-  .full (full),
-  .empty(empty)
+  .count(count)
 );
 
 bind port_master port_sva #(.ADDR_W(ADDR_W), .LEN_W(LEN_W), .ID_W(ID_W)) u_port_sva (

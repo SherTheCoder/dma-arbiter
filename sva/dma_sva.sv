@@ -35,14 +35,21 @@ module arb_sva #(
 endmodule
 
 
-module fifo_sva (
-  input wire logic clk,
-  input wire logic rst_n,
-  input wire logic push,
-  input wire logic pop,
-  input wire logic full,
-  input wire logic empty
+module fifo_sva #(
+  parameter int DEPTH = 4,
+  localparam int CW   = $clog2(DEPTH + 1)
+) (
+  input wire logic          clk,
+  input wire logic          rst_n,
+  input wire logic          push,
+  input wire logic          pop,
+  input wire logic [CW-1:0] count
 );
+  // from the count, not the fifo's own flags, so a wrong flag can't vouch for itself
+  logic full, empty;
+  assign full  = count == CW'(DEPTH);
+  assign empty = count == '0;
+
   a_fifo_no_ovf: assert property (@(posedge clk) disable iff (!rst_n) push |-> !full)
     else $error("A4 fifo_no_overflow");
   a_fifo_no_udf: assert property (@(posedge clk) disable iff (!rst_n) pop |-> !empty)
