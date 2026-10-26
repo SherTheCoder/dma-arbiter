@@ -12,4 +12,10 @@ unit:
 	$(MAKE) -C tb/unit TOP=sync_fifo DEPTH=3
 	$(MAKE) -C tb/unit TOP=sync_fifo DEPTH=4
 
-.PHONY: lint unit
+TEST ?= smoke_m2p
+SEED ?= 1
+
+test:
+	$(MAKE) -C tb TEST=$(TEST) SEED=$(SEED)
+
+.PHONY: lint unit test
