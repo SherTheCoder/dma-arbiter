@@ -1,0 +1,66 @@
+{
+ "regression": {
+  "seeds_run": 1000,
+  "seeds_passed": 1000,
+  "port_transactions": 181108,
+  "directed_passed": "9/9",
+  "failing_seeds": []
+ },
+ "coverage": {
+  "main_cross_hit": 128,
+  "main_cross_bins": 128,
+  "lowest_hits": 327,
+  "holes": []
+ },
+ "assertions_live": "6/6",
+ "mutants_killed": "10/10",
+ "real_bugs_found": 0,
+ "bugs_directed_tests_missed": 0,
+ "model_error": {
+  "mean": 0.0,
+  "p95": 0.0,
+  "max": 0.0,
+  "scenarios": 204,
+  "burst_latency_mae": 0.0
+ },
+ "mapping": {
+  "E1": {
+   "throughput_loss": 0.2325903164941876,
+   "loss_min": 0.23175712470502807,
+   "loss_max": 0.23323060188542422,
+   "tx_latency_ratio": 1.3384650200439672,
+   "rx_latency_ratio": 1.4302164502164503
+  },
+  "E2": {
+   "throughput_loss": 0.11550277245701934,
+   "loss_min": 0.1153309730715588,
+   "loss_max": 0.11581611858334945,
+   "tx_latency_ratio": 1.1044576096007295,
+   "rx_latency_ratio": 1.0418495935776861
+  }
+ },
+ "sweep": {
+  "loss_min": 0.053097716380730645,
+  "loss_max": 0.37724045131344586,
+  "pen0_bg0_loss": 0.10834732865954835,
+  "inverted_beats_balanced": []
+ },
+ "synth": {
+  "num_ch_4": {
+   "cells": 9361,
+   "flops": 2924
+  },
+  "num_ch_8": {
+   "cells": 18362,
+   "flops": 5418
+  }
+ },
+ "tools": {
+  "verilator": "Verilator 5.053 devel rev v5.052-604-gcecfb4384 (mod)",
+  "yosys": "Yosys 0.70+221 (git sha1 33177a407, Release, Clang /usr/local/osxcross/target/bin/x86_64-apple-darwin25.5-clang++ 21.1.8)",
+  "python": "3.11.13",
+  "cocotb": "2.1.0",
+  "pyuvm": "5.0.0"
+ },
+ "commit": "60228c0"
+}

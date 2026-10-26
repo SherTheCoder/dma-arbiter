@@ -1,0 +1,14 @@
+10/10 mutants killed
+
+m01  arbiter pointer never advances              should hit A3  killed by A3 rr_bounded_wait (all_on_one_port seed 1)
+m02  extra grant when two channels request       should hit A1  killed by A1 gnt_onehot0 (all_on_one_port seed 1)
+m03  grant to a channel that isn't requesting    should hit A2  killed by A2 gnt_has_req (smoke_m2p seed 1)
+m04  fifo full flag one entry late               should hit A4  killed by A4 fifo_no_overflow (all_on_one_port seed 1)
+m05  issue fsm pops an empty fifo                should hit A5  killed by A5 fifo_no_underflow (smoke_m2p seed 1)
+m06  cmd_addr moves while waiting on cmd_ready   should hit A6  killed by A6 cmd_stable (rand seed 1)
+m07  wlast one beat early                        scoreboard  killed by scoreboard check 1 (smoke_m2p seed 1)
+m08  source address never increments             scoreboard  killed by scoreboard check 1 (smoke_m2p seed 1)
+m09  tail burst rounded up to a full burst       scoreboard  killed by scoreboard check 1 (max_burst_tail seed 1)
+m10  read data routed to channel id + 1          scoreboard  killed by scoreboard check 2 (smoke_m2p seed 1)
+
+assertions that killed a mutant: A1, A2, A3, A4, A5, A6

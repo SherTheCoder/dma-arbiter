@@ -1,0 +1,74 @@
+{
+ "killed": 10,
+ "total": 10,
+ "assertions_that_killed": [
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "A5",
+  "A6"
+ ],
+ "mutants": [
+  {
+   "mutant": "m01",
+   "killed": true,
+   "by": "A3 rr_bounded_wait",
+   "first_fail": "all_on_one_port seed 1"
+  },
+  {
+   "mutant": "m02",
+   "killed": true,
+   "by": "A1 gnt_onehot0",
+   "first_fail": "all_on_one_port seed 1"
+  },
+  {
+   "mutant": "m03",
+   "killed": true,
+   "by": "A2 gnt_has_req",
+   "first_fail": "smoke_m2p seed 1"
+  },
+  {
+   "mutant": "m04",
+   "killed": true,
+   "by": "A4 fifo_no_overflow",
+   "first_fail": "all_on_one_port seed 1"
+  },
+  {
+   "mutant": "m05",
+   "killed": true,
+   "by": "A5 fifo_no_underflow",
+   "first_fail": "smoke_m2p seed 1"
+  },
+  {
+   "mutant": "m06",
+   "killed": true,
+   "by": "A6 cmd_stable",
+   "first_fail": "rand seed 1"
+  },
+  {
+   "mutant": "m07",
+   "killed": true,
+   "by": "scoreboard check 1",
+   "first_fail": "smoke_m2p seed 1"
+  },
+  {
+   "mutant": "m08",
+   "killed": true,
+   "by": "scoreboard check 1",
+   "first_fail": "smoke_m2p seed 1"
+  },
+  {
+   "mutant": "m09",
+   "killed": true,
+   "by": "scoreboard check 1",
+   "first_fail": "max_burst_tail seed 1"
+  },
+  {
+   "mutant": "m10",
+   "killed": true,
+   "by": "scoreboard check 2",
+   "first_fail": "smoke_m2p seed 1"
+  }
+ ]
+}

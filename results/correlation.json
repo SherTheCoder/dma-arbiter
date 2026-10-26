@@ -1,0 +1,1441 @@
+{
+ "scenarios": 204,
+ "total_cycle_error": {
+  "mean": 0.0,
+  "p95": 0.0,
+  "max": 0.0,
+  "max_at": "rand seed 10000"
+ },
+ "burst_latency_mae_cycles": 0.0,
+ "bursts": 53690,
+ "rows": [
+  {
+   "name": "rand",
+   "seed": 10000,
+   "rtl": 1366,
+   "model": 1366,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10001,
+   "rtl": 2837,
+   "model": 2837,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10002,
+   "rtl": 2120,
+   "model": 2120,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10003,
+   "rtl": 2287,
+   "model": 2287,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10005,
+   "rtl": 1513,
+   "model": 1513,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10006,
+   "rtl": 1603,
+   "model": 1603,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10007,
+   "rtl": 2211,
+   "model": 2211,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10008,
+   "rtl": 3825,
+   "model": 3825,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10010,
+   "rtl": 2123,
+   "model": 2123,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10011,
+   "rtl": 2802,
+   "model": 2802,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10012,
+   "rtl": 1511,
+   "model": 1511,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10013,
+   "rtl": 1616,
+   "model": 1616,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10015,
+   "rtl": 1255,
+   "model": 1255,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10016,
+   "rtl": 1457,
+   "model": 1457,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10017,
+   "rtl": 1916,
+   "model": 1916,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10018,
+   "rtl": 1583,
+   "model": 1583,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10020,
+   "rtl": 4132,
+   "model": 4132,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10021,
+   "rtl": 1594,
+   "model": 1594,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10022,
+   "rtl": 2471,
+   "model": 2471,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10023,
+   "rtl": 1538,
+   "model": 1538,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10025,
+   "rtl": 1786,
+   "model": 1786,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10026,
+   "rtl": 2626,
+   "model": 2626,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10027,
+   "rtl": 2888,
+   "model": 2888,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10028,
+   "rtl": 920,
+   "model": 920,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10030,
+   "rtl": 2948,
+   "model": 2948,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10031,
+   "rtl": 1436,
+   "model": 1436,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10032,
+   "rtl": 1852,
+   "model": 1852,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10033,
+   "rtl": 1381,
+   "model": 1381,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10035,
+   "rtl": 984,
+   "model": 984,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10036,
+   "rtl": 1322,
+   "model": 1322,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10037,
+   "rtl": 1842,
+   "model": 1842,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10038,
+   "rtl": 1721,
+   "model": 1721,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10040,
+   "rtl": 4456,
+   "model": 4456,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10041,
+   "rtl": 1543,
+   "model": 1543,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10042,
+   "rtl": 1335,
+   "model": 1335,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10043,
+   "rtl": 1499,
+   "model": 1499,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10045,
+   "rtl": 1382,
+   "model": 1382,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10046,
+   "rtl": 1584,
+   "model": 1584,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10047,
+   "rtl": 1783,
+   "model": 1783,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10048,
+   "rtl": 1601,
+   "model": 1601,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10050,
+   "rtl": 1912,
+   "model": 1912,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10051,
+   "rtl": 1666,
+   "model": 1666,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10052,
+   "rtl": 2036,
+   "model": 2036,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10053,
+   "rtl": 3025,
+   "model": 3025,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10055,
+   "rtl": 3232,
+   "model": 3232,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10056,
+   "rtl": 3024,
+   "model": 3024,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10057,
+   "rtl": 1067,
+   "model": 1067,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10058,
+   "rtl": 4632,
+   "model": 4632,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10060,
+   "rtl": 1534,
+   "model": 1534,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10061,
+   "rtl": 2456,
+   "model": 2456,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10062,
+   "rtl": 1808,
+   "model": 1808,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10063,
+   "rtl": 913,
+   "model": 913,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10065,
+   "rtl": 1348,
+   "model": 1348,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10066,
+   "rtl": 1966,
+   "model": 1966,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10067,
+   "rtl": 1630,
+   "model": 1630,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10068,
+   "rtl": 2117,
+   "model": 2117,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10070,
+   "rtl": 1087,
+   "model": 1087,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10071,
+   "rtl": 2071,
+   "model": 2071,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10072,
+   "rtl": 983,
+   "model": 983,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10073,
+   "rtl": 2361,
+   "model": 2361,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10075,
+   "rtl": 1165,
+   "model": 1165,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10076,
+   "rtl": 1674,
+   "model": 1674,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10077,
+   "rtl": 1525,
+   "model": 1525,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10078,
+   "rtl": 1430,
+   "model": 1430,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10080,
+   "rtl": 1753,
+   "model": 1753,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10081,
+   "rtl": 1418,
+   "model": 1418,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10082,
+   "rtl": 1910,
+   "model": 1910,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10083,
+   "rtl": 1506,
+   "model": 1506,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10085,
+   "rtl": 973,
+   "model": 973,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10086,
+   "rtl": 1479,
+   "model": 1479,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10087,
+   "rtl": 2146,
+   "model": 2146,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10088,
+   "rtl": 3277,
+   "model": 3277,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10090,
+   "rtl": 1558,
+   "model": 1558,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10091,
+   "rtl": 1306,
+   "model": 1306,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10092,
+   "rtl": 1151,
+   "model": 1151,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10093,
+   "rtl": 1788,
+   "model": 1788,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10095,
+   "rtl": 1599,
+   "model": 1599,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10096,
+   "rtl": 1523,
+   "model": 1523,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10097,
+   "rtl": 2932,
+   "model": 2932,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10098,
+   "rtl": 1291,
+   "model": 1291,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10100,
+   "rtl": 1193,
+   "model": 1193,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10101,
+   "rtl": 1905,
+   "model": 1905,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10102,
+   "rtl": 1552,
+   "model": 1552,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10103,
+   "rtl": 1329,
+   "model": 1329,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10105,
+   "rtl": 2228,
+   "model": 2228,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10106,
+   "rtl": 2824,
+   "model": 2824,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10107,
+   "rtl": 1384,
+   "model": 1384,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10108,
+   "rtl": 1933,
+   "model": 1933,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10110,
+   "rtl": 2908,
+   "model": 2908,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10111,
+   "rtl": 2124,
+   "model": 2124,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10112,
+   "rtl": 3221,
+   "model": 3221,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10113,
+   "rtl": 2503,
+   "model": 2503,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10115,
+   "rtl": 1498,
+   "model": 1498,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10116,
+   "rtl": 1187,
+   "model": 1187,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10117,
+   "rtl": 1997,
+   "model": 1997,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10118,
+   "rtl": 1311,
+   "model": 1311,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10120,
+   "rtl": 4873,
+   "model": 4873,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10121,
+   "rtl": 1789,
+   "model": 1789,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10122,
+   "rtl": 1768,
+   "model": 1768,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10123,
+   "rtl": 1662,
+   "model": 1662,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10125,
+   "rtl": 755,
+   "model": 755,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10126,
+   "rtl": 1702,
+   "model": 1702,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10127,
+   "rtl": 1242,
+   "model": 1242,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10128,
+   "rtl": 1658,
+   "model": 1658,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10130,
+   "rtl": 1797,
+   "model": 1797,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10131,
+   "rtl": 1464,
+   "model": 1464,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10132,
+   "rtl": 1332,
+   "model": 1332,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10133,
+   "rtl": 2356,
+   "model": 2356,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10135,
+   "rtl": 1040,
+   "model": 1040,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10136,
+   "rtl": 1325,
+   "model": 1325,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10137,
+   "rtl": 3148,
+   "model": 3148,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10138,
+   "rtl": 2749,
+   "model": 2749,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10140,
+   "rtl": 1980,
+   "model": 1980,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10141,
+   "rtl": 1414,
+   "model": 1414,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10142,
+   "rtl": 1422,
+   "model": 1422,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10143,
+   "rtl": 1774,
+   "model": 1774,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10145,
+   "rtl": 1501,
+   "model": 1501,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10146,
+   "rtl": 1746,
+   "model": 1746,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10147,
+   "rtl": 3798,
+   "model": 3798,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10148,
+   "rtl": 1442,
+   "model": 1442,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10150,
+   "rtl": 1911,
+   "model": 1911,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10151,
+   "rtl": 2701,
+   "model": 2701,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10152,
+   "rtl": 1280,
+   "model": 1280,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10153,
+   "rtl": 1589,
+   "model": 1589,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10155,
+   "rtl": 2650,
+   "model": 2650,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10156,
+   "rtl": 1398,
+   "model": 1398,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10157,
+   "rtl": 2022,
+   "model": 2022,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10158,
+   "rtl": 2586,
+   "model": 2586,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10160,
+   "rtl": 4675,
+   "model": 4675,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10161,
+   "rtl": 3044,
+   "model": 3044,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10162,
+   "rtl": 1067,
+   "model": 1067,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10163,
+   "rtl": 1269,
+   "model": 1269,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10165,
+   "rtl": 1324,
+   "model": 1324,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10166,
+   "rtl": 1309,
+   "model": 1309,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10167,
+   "rtl": 1421,
+   "model": 1421,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10168,
+   "rtl": 1859,
+   "model": 1859,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10170,
+   "rtl": 1754,
+   "model": 1754,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10171,
+   "rtl": 1181,
+   "model": 1181,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10172,
+   "rtl": 1334,
+   "model": 1334,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10173,
+   "rtl": 2043,
+   "model": 2043,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10175,
+   "rtl": 1876,
+   "model": 1876,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10176,
+   "rtl": 1050,
+   "model": 1050,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10177,
+   "rtl": 1166,
+   "model": 1166,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10178,
+   "rtl": 1749,
+   "model": 1749,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10180,
+   "rtl": 1536,
+   "model": 1536,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10181,
+   "rtl": 1334,
+   "model": 1334,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10182,
+   "rtl": 2035,
+   "model": 2035,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10183,
+   "rtl": 1054,
+   "model": 1054,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10185,
+   "rtl": 1338,
+   "model": 1338,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10186,
+   "rtl": 883,
+   "model": 883,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10187,
+   "rtl": 986,
+   "model": 986,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10188,
+   "rtl": 2290,
+   "model": 2290,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10190,
+   "rtl": 1604,
+   "model": 1604,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10191,
+   "rtl": 1192,
+   "model": 1192,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10192,
+   "rtl": 1464,
+   "model": 1464,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10193,
+   "rtl": 1493,
+   "model": 1493,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10195,
+   "rtl": 1765,
+   "model": 1765,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10196,
+   "rtl": 1299,
+   "model": 1299,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10197,
+   "rtl": 2200,
+   "model": 2200,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10198,
+   "rtl": 1872,
+   "model": 1872,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10004,
+   "rtl": 1297,
+   "model": 1297,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10009,
+   "rtl": 1596,
+   "model": 1596,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10014,
+   "rtl": 1285,
+   "model": 1285,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10019,
+   "rtl": 1767,
+   "model": 1767,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10024,
+   "rtl": 3450,
+   "model": 3450,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10029,
+   "rtl": 1100,
+   "model": 1100,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10034,
+   "rtl": 1806,
+   "model": 1806,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10039,
+   "rtl": 1043,
+   "model": 1043,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10044,
+   "rtl": 979,
+   "model": 979,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10049,
+   "rtl": 3181,
+   "model": 3181,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10054,
+   "rtl": 2949,
+   "model": 2949,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10059,
+   "rtl": 1858,
+   "model": 1858,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10064,
+   "rtl": 2943,
+   "model": 2943,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10069,
+   "rtl": 1291,
+   "model": 1291,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10074,
+   "rtl": 2479,
+   "model": 2479,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10079,
+   "rtl": 1889,
+   "model": 1889,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10084,
+   "rtl": 1634,
+   "model": 1634,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10089,
+   "rtl": 1337,
+   "model": 1337,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10094,
+   "rtl": 1963,
+   "model": 1963,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10099,
+   "rtl": 1321,
+   "model": 1321,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10104,
+   "rtl": 1769,
+   "model": 1769,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10109,
+   "rtl": 1318,
+   "model": 1318,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10114,
+   "rtl": 1775,
+   "model": 1775,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10119,
+   "rtl": 1211,
+   "model": 1211,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10124,
+   "rtl": 874,
+   "model": 874,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10129,
+   "rtl": 2179,
+   "model": 2179,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10134,
+   "rtl": 1205,
+   "model": 1205,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10139,
+   "rtl": 3136,
+   "model": 3136,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10144,
+   "rtl": 1620,
+   "model": 1620,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10149,
+   "rtl": 3632,
+   "model": 3632,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10154,
+   "rtl": 1279,
+   "model": 1279,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10159,
+   "rtl": 1195,
+   "model": 1195,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10164,
+   "rtl": 2787,
+   "model": 2787,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10169,
+   "rtl": 2175,
+   "model": 2175,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10174,
+   "rtl": 1657,
+   "model": 1657,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10179,
+   "rtl": 1472,
+   "model": 1472,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10184,
+   "rtl": 1442,
+   "model": 1442,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10189,
+   "rtl": 1496,
+   "model": 1496,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10194,
+   "rtl": 2914,
+   "model": 2914,
+   "err": 0.0
+  },
+  {
+   "name": "rand",
+   "seed": 10199,
+   "rtl": 1845,
+   "model": 1845,
+   "err": 0.0
+  },
+  {
+   "name": "sai_bal_bg0",
+   "seed": 0,
+   "rtl": 16918,
+   "model": 16918,
+   "err": 0.0
+  },
+  {
+   "name": "sai_bal_bg5",
+   "seed": 0,
+   "rtl": 41228,
+   "model": 41228,
+   "err": 0.0
+  },
+  {
+   "name": "sai_inv_bg0",
+   "seed": 0,
+   "rtl": 22064,
+   "model": 22064,
+   "err": 0.0
+  },
+  {
+   "name": "sai_inv_bg5",
+   "seed": 0,
+   "rtl": 46620,
+   "model": 46620,
+   "err": 0.0
+  }
+ ]
+}
