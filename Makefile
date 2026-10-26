@@ -1,7 +1,8 @@
-RTL = rtl/dma_pkg.sv rtl/rr_arbiter.sv rtl/sync_fifo.sv
+RTL = rtl/dma_pkg.sv rtl/rr_arbiter.sv rtl/sync_fifo.sv rtl/dma_channel.sv rtl/port_master.sv rtl/dma_arbiter_top.sv
 
 lint:
-	verilator --lint-only -Wall $(RTL)
+	verilator --lint-only -Wall --top-module dma_arbiter_top $(RTL)
+	verilator --lint-only -Wall --top-module dma_arbiter_top -GNUM_CH=4 -GCMD_FIFO_DEPTH=2 $(RTL)
 
 unit:
 	$(MAKE) -C tb/unit TOP=flop
