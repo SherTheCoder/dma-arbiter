@@ -2,12 +2,15 @@
 TOP ?= flop
 SIM ?= verilator
 TOPLEVEL_LANG = verilog
-RTL = $(abspath ../../rtl)
+ROOT = $(abspath ../..)
 
 ifeq ($(TOP),flop)
 VERILOG_SOURCES = $(abspath flop.sv)
 else
-VERILOG_SOURCES = $(RTL)/dma_pkg.sv $(RTL)/$(TOP).sv
+# everything, so the bind file finds the modules it binds to
+VERILOG_SOURCES = $(addprefix $(ROOT)/rtl/, dma_pkg.sv rr_arbiter.sv sync_fifo.sv dma_channel.sv port_master.sv dma_arbiter_top.sv) \
+                  $(ROOT)/sva/dma_sva.sv $(ROOT)/sva/dma_sva_bind.sv
+EXTRA_ARGS += --assert
 endif
 
 ifeq ($(TOP),rr_arbiter)
