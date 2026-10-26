@@ -11,11 +11,15 @@ SEED = int(os.environ.get("SEED", 1))
 
 
 def seeds():
-    s = os.environ.get("SEEDS")
-    if not s:
-        return [SEED]
-    a, b = s.split(":")
-    return list(range(int(a), int(b)))
+    """SEEDS is "a:b", "3,8,13" or a mix of both."""
+    out = []
+    for part in (os.environ.get("SEEDS") or str(SEED)).split(","):
+        if ":" in part:
+            a, b = part.split(":")
+            out += range(int(a), int(b))
+        else:
+            out.append(int(part))
+    return out
 
 
 async def run(dut, test, seed, **attrs):

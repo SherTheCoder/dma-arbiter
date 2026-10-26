@@ -1,0 +1,15 @@
+seeds: "0:1000"
+shards: 4
+# every 5th seed (seed % 5 == 4) runs on the CMD_FIFO_DEPTH=2 build, the rest on 4
+depth2_every: 5
+# in the order test_dma.py defines them
+directed:
+  - smoke_m2p
+  - smoke_p2m
+  - single_beat
+  - max_burst_tail
+  - all_on_one_port
+  - fifo_full
+  - reload
+  - sai_balanced
+  - sai_inverted

@@ -80,7 +80,7 @@ def reload(seed):
     return Scenario("reload", seed, [desc(3, k, 20, 8) for k in ("M2P", "P2M", "M2M", "M2P")])
 
 
-def sai(seed, inverted, bg=0, beats=2048, fabric=None):
+def sai(seed, inverted, bg=0, beats=2048, fabric=None, name=None):
     """2 RX (P2M) and 1 TX (M2P), burst 4, plus up to 5 balanced background channels, burst 8.
 
     The seed only moves descriptor start offsets, 0 to 64 cycles.
@@ -93,7 +93,7 @@ def sai(seed, inverted, bg=0, beats=2048, fabric=None):
         descs.append(desc(3 + i, "P2M" if i % 2 == 0 else "M2P", beats, 8))
     for d in descs:
         d.delay = rng.randint(0, 64)
-    name = f"sai_{'inverted' if inverted else 'balanced'}_bg{bg}"
+    name = name or f"sai_{'inv' if inverted else 'bal'}_bg{bg}"
     return Scenario(name, seed, descs, fabric=fabric)
 
 
@@ -105,8 +105,8 @@ DIRECTED = {
     "all_on_one_port": all_on_one_port,
     "fifo_full": fifo_full,
     "reload": reload,
-    "sai_balanced": lambda seed: sai(seed, inverted=False),
-    "sai_inverted": lambda seed: sai(seed, inverted=True),
+    "sai_balanced": lambda seed: sai(seed, inverted=False, name="sai_balanced"),
+    "sai_inverted": lambda seed: sai(seed, inverted=True, name="sai_inverted"),
 }
 
 
