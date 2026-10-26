@@ -38,7 +38,6 @@ module port_master
   input  wire logic [ID_W-1:0]   rid,
   /* verilator lint_on UNUSEDSIGNAL */
 
-  // the channel being served and its buffer
   output logic      [ID_W-1:0]   id,
   input  wire logic [DATA_W-1:0] buf_rdata,
   output logic                   buf_re,
