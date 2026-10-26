@@ -34,4 +34,7 @@ regress:
 cov:
 	python scripts/merge_coverage.py build/regress results
 
-.PHONY: lint synth unit test regress cov
+perf:
+	python experiments/correlate.py
+
+.PHONY: lint synth unit test regress cov perf

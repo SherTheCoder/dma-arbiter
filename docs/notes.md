@@ -105,6 +105,15 @@ back-pressure on purpose): with the delays straight from the table it matched ev
 to the cycle, totals and per-burst latency, so nothing needed tuning. Frozen at tag
 `perf-model-v1` before looking at any held-out scenario.
 
+2026-10-27  held-out run, seeds 10000-10199 with back-pressure off plus E1/E2 balanced and
+inverted: 204 scenarios, total-cycle error 0 on every one, burst latency MAE 0. That looked
+too good so I checked it isn't comparing something with itself: the model only gets the
+descriptors, fifo depth and fabric yaml out of each dump. Bumping any one pipeline handoff
+by a cycle (req->grant, push->pop, pop->accept, accept->start) puts the mean error at 6-8%
+and the max at 16.7%, ch_done +1 gives 0.1% mean. So it's exact because nothing is
+random once back-pressure is off and the model walks the same pipeline, not because
+the check is blind. With back-pressure on it would drift, it doesn't model stalls at all.
+
 ## bugs hit along the way
 
 (none yet)
