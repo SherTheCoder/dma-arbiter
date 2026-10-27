@@ -4,7 +4,7 @@
 
 A small DMA engine in SystemVerilog, 8 channels sharing 2 bus master ports, with a pyuvm
 testbench and an experiment on what happens when one channel has its ports the wrong way
-round.
+round, in RTL and then on the real chip.
 
 ## Why
 
@@ -20,7 +20,7 @@ they've since [merged the fix](https://github.com/STMicroelectronics/stm32n6570-
 into the BSP.
 
 It worked either way, so the question was how much it cost. This rebuilds that situation
-in RTL so I could measure it instead of guessing.
+in RTL so I could measure it instead of guessing, and `board/` then measures it on the chip.
 
 ## How it works
 
@@ -96,8 +96,8 @@ Balanced vs TX inverted, default fabric (3 cycle cross paths), mean of 10 seeds:
 | E1: 2 RX + 1 TX | 23.3% | x1.34 | x1.43 |
 | E2: plus 5 busy channels | 11.6% | x1.10 | x1.04 |
 
-Inverting just the TX channel cost about 23% throughput with only the three SAI channels
-running. I expected that to get worse once the other channels got busy and it went the
+In the model, inverting just the TX channel cost about 23% throughput with only the three
+SAI channels running. I expected that to get worse once the other channels got busy and it went the
 other way, down to 12%. The APB bridge is the bottleneck either way, and with five more
 channels on it TX is a much smaller share of its work. Even with zero penalty on the cross
 paths it still loses 11%, because the two ports now queue behind each other for the same
@@ -116,6 +116,52 @@ error was 0.00%, mean 0.00%. That's because with back-pressure off nothing is ra
 the model walks the same pipeline. Bumping any one handoff by a cycle gives 6-8% mean
 error, so the check isn't blind.
 
+## On the real board
+
+`board/` runs the same E1/E2 traffic on an STM32N6570-DK, on the real GPDMA1. A small
+bare-metal bench loads into RAM over the ST-LINK, sets the clocks from ST's DK templates
+(CPU 600 MHz, buses 200 MHz) and runs channels 0-7 flat out on software request, like the
+RTL fabric. TX goes from SRAM to the SAI1_A data register, the two RX channels read SAI1_B
+and SAI2_A, and the background channels hit other APB2 registers. Same seeds, same start
+offsets. The SAI blocks stay disabled, so this measures the bus, not audio. The DWT cycle
+counter stamps every channel's start and finish: 2408 jobs, no DMA errors. All numbers are
+bus cycles.
+
+| | RTL model | board |
+| --- | --- | --- |
+| E1 throughput lost | 23.3% | -0.2% |
+| E2 throughput lost | 11.6% | -0.1% |
+| E1 TX transfer time, inverted vs balanced | | x1.51 |
+| E2 TX transfer time | | x1.34 |
+| E1 worst TX latency | x1.34 | x1.50 |
+| E2 worst TX latency | x1.10 | x1.87 |
+| E1 worst RX latency | x1.43 | x0.93 |
+| E2 worst RX latency | x1.04 | x1.12 |
+
+Latency on the board is one 4-word block on that channel while everything else streams,
+from the enable to the done flag. In the RTL it's every burst in the stream. Close, but not
+the same measurement.
+
+The model got the main thing wrong. Inverting TX costs no throughput on the board, because
+the ports aren't the bottleneck. Every GPDMA access to AXISRAM costs about 15-16 bus
+cycles and both ports seem to share that path (a memory-to-memory copy gets nothing from
+split ports), while moving a word between APB2 and AHB SRAM costs 3.5-5. And I couldn't
+find the direct path at all. One channel on its own takes exactly as long whichever port
+carries the SAI side, to SRAM, AHB SRAM or APB2. What counts is whether a channel's read
+and write are on different ports (15 vs 19 cycles a word).
+
+What inverting does cost is TX latency. With the two RX channels streaming, a 4-word TX
+block takes 156 bus cycles balanced and 237 inverted, and 376 vs 659 with all eight
+channels busy. Balanced, TX streams 1.5x faster than the RX channels; inverted it's just
+one more channel. For audio that's the part that matters: the SAI only needs a trickle of
+bandwidth, but it needs every word on time.
+
+![board](results/board.png)
+
+`results/board.txt` has the rest, including the same runs with the buffers in AHB SRAM
+(no loss there either) and a check that the CPU polling GPDMA1 doesn't move the result.
+`docs/notes.md` has how the bench works.
+
 ## Running it
 
 OSS CAD Suite 2026-10-26 (Verilator 5.053, Yosys 0.70 with yosys-slang) and Python 3.11.
@@ -133,15 +179,22 @@ make perf             # model vs RTL
 make experiments      # E1/E2 and the sweep, ~20 min
 make mutate
 make results
+make board            # on the DK, see below
 ```
 
 To replay a seed, `make test TEST=rand SEED=417`. It picks the right fifo depth for the
 seed, and if it fails it runs it again with an FST dump in `build/test/`.
 
+`make board` needs an STM32N6570-DK in dev boot mode on USB, arm-none-eabi-gcc, the
+STM32CubeN6 package (`CUBE=`, defaults to `~/STM32Cube/Repository/STM32Cube_FW_N6_V1.3.0`)
+and ST's OpenOCD from STM32CubeIDE (`OPENOCD`, `OPENOCD_SCRIPTS`). It runs from RAM and
+doesn't touch the flash.
+
 ## Notes
 
-- The fabric is a model. The latencies are numbers I picked, not measurements of STM32N6
-  silicon.
+- The fabric is a model with latencies I picked, and the board says they're wrong in
+  shape: SRAM is the slow side, not the APB bridge, and there's no cross-path penalty. I've
+  left the model as it was, the board numbers sit next to it.
 - One transaction per port, no outstanding reads, no linked lists or 2D transfers. The real
   GPDMA does a lot more.
 - The checks never caught a real RTL bug. The holes I found were in my own testbench, the
