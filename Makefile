@@ -47,4 +47,10 @@ mutate:
 results:
 	python scripts/summarize.py
 
-.PHONY: lint synth unit test regress cov perf experiments mutate results
+# the same experiment on an STM32N6570-DK in dev boot mode, see board/run.py
+board:
+	$(MAKE) -C board
+	python board/run.py
+	python board/analyse.py
+
+.PHONY: lint synth unit test regress cov perf experiments mutate results board
