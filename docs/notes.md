@@ -154,6 +154,102 @@ target the other port has, and its port can't do anything else meanwhile since i
 one transaction per port. So close to half of the 23.3% at the default penalty is just
 from the ports sharing targets, not from the slower path.
 
+## on the board
+
+board/ is a bare-metal bench for the STM32N6570-DK (STM32N657, idcode 0x10006486). In dev
+boot mode the boot ROM sits in an idle loop waiting for a debugger, so run.py resets the
+board, checks the core really is in the ROM, loads the bench into AXISRAM2 at the FSBL
+address and starts it with interrupts masked. The external flash is never touched. Clocks
+are the ones in ST's DK templates: CPU 600 MHz, AXI 400, AHB/APB 200, no overdrive.
+I-cache on, D-cache off so the host and the CPU see the same memory. The DMA buffers get
+AXISRAM1 to themselves, code and job tables are in AXISRAM2.
+
+A job is up to 8 GPDMA1 channels, 0-7, secure and privileged like the BSP's, all on
+software request so they run flat out like the RTL fabric. Roles and seeds are the ones in
+seqs.sai(): TX is memory -> SAI1_A DR, RX reads SAI1_B and SAI2_A, the background channels
+hit SAI2_B and CCR1 of TIM15/16/17/9, all on APB2. The SAI blocks stay disabled, so this
+is the bus only, no audio ever runs. Balanced is the peripheral side on port 0 and memory
+on port 1, inverted flips TX only.
+
+Timing is the DWT cycle counter. The bench enables the channels at their seed offsets
+(x3, CPU cycles) and stamps each enable, then polls GPDMA1 SMISR (TCIE set, NVIC lines off)
+and stamps the first poll that shows each channel done. Throughput and per-channel times
+use the same definitions as the RTL. Everything in the results is bus cycles, CPU / 3.
+
+Before anything is timed a self-test copies memory to memory on every port pair (AXISRAM
+and AHB SRAM), uses a timer register as sink and as source on every port pair, and checks
+the SAI TX fifo really fills. run.py stops if any of it fails.
+
+2026-10-27  path costs, one channel alone, bus cycles per word from a fit over 16-1024
+word blocks (below that the poll's own round trip, ~69 cycles, hides it):
+
+```
+                     same port   split ports
+AXISRAM -> APB2        19.0        15.0
+APB2 -> AXISRAM        19.0        16.5
+AXISRAM -> AXISRAM     31.2        31.2
+APB2 -> APB2            7.0         4.5
+AHBSRAM -> APB2         5.0         4.0
+APB2 -> AHBSRAM         4.0         3.5
+```
+
+Port 0 and port 1 come out within 0.005 cycles a word of each other in every row. So
+there's no direct or cross path to see, what costs is having both sides of a channel on
+the same port. Memory is the slow side, and memory to memory gains nothing from split
+ports, so both ports seem to go through the same path to AXISRAM. The fabric model has
+this the wrong way round (MEM 1 cycle a word, PERIPH 2, +3 across). Bursts of 1, 4 or 8
+time the same on these channels, to within 0.0001 on every ratio, so the BSP's burst of 1
+and the RTL's 4/8 give the same answer.
+
+2026-10-27  E1/E2 on the board, 10 seeds x 3 runs, paired:
+
+- throughput lost by inverting TX: -0.2% in E1, -0.1% in E2, inverted very slightly
+  ahead. The RTL said 23.3% and 11.6%.
+- TX's own transfer time x1.51 in E1, x1.34 in E2. RX doesn't move.
+- balanced E1, TX is done after 64k cycles and the RX channels at 96k. Inverted, all three
+  finish at 96k. In balanced E2 the memory-to-SAI channels (TX, bg ch4 and ch6) finish at
+  191k and the rest at 256k. Inverted, TX drops back into the 256k group and ch4/ch6 finish
+  at 126k.
+
+The total doesn't move because AXISRAM is the bottleneck either way. 3 x 2048 words in
+96k cycles is 15.7 a word, about the cost of one access. Inverting only changes which
+channel gets it. With the buffers in AHB SRAM APB2 becomes the bottleneck instead (3.34-3.38
+cycles a word) and the loss is still 0.0% in E1 and -1.3% in E2, TX time x1.42 and x1.27.
+
+For latency, the probe jobs: one SAI channel does single 4-word blocks back to back while
+the others stream 8192 words each, so they're still going when the probes end (checked
+per job, it held in all of them). A block is timed from the CCR write to the CSR read that
+shows TCF, so it includes the CPU's own register round trip, which is why it's 81 cycles
+with nothing else running.
+
+```
+                  balanced        inverted
+                mean   worst    mean   worst
+TX alone          81     81       81     81
+TX, E1 load      156    161      237    241
+TX, E2 load      376    385      659    768
+RX alone          88     88       88     88
+RX, E1 load      250    264      224    248
+RX, E2 load      621    640      650    776
+```
+
+TX latency goes up 1.5x with the RX channels running, 1.75x mean and 1.87x worst with
+all eight. RX gets a little better in E1 and 1.12x worse at worst in E2. My guess at why:
+inverted, TX's SAI writes go out on port 1 behind the RX channels' SRAM writes, ~16
+cycles each, where balanced they share port 0 with other APB accesses of a few cycles.
+I haven't shown that, it just fits the numbers.
+
+Polling check: the CPU reads SMISR while the channels run, over the same AHB as GPDMA1's
+register port. Polling flat out moves the E1 loss by about 1% in favour of inverted.
+Every 200 CPU cycles, which the main runs use, moves it by 0.1-0.2%, and every 2000 by
+nothing I can measure. I ran the whole set twice with a reset and reload in between:
+the main losses moved by up to 0.12 points (the flat-out polling ones by 0.25) and the
+latency ratios by up to 0.03.
+
+Not covered: the SAI actually running (at audio rates the channels sit idle most of the
+time and none of this saturation happens), channels 12-15 with their bigger fifos, where
+bursts might matter, other clock setups, other boards. It's one board and one silicon rev.
+
 ## mutation testing
 
 2026-10-27  while writing m04 (full flag one entry late) I noticed A4 as first written,
