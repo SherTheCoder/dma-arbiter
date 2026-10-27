@@ -14,7 +14,9 @@ On the STM32N6 each GPDMA channel picks which of the controller's two master por
 its source and which carries its destination. ST's AN5593 (section 2.3) says to put the
 peripheral on port 0, which has the direct path to the APB bridge, and memory on port 1.
 The STM32N6570-DK BSP had the SAI TX channel the other way round, memory on port 0 and the
-SAI on port 1. I tracked it down and reported it to ST, and they've since merged the fix
+SAI on port 1. I tracked it down and
+[reported it to ST](https://github.com/STMicroelectronics/stm32n6570-dk-bsp/issues/2), and
+they've since [merged the fix](https://github.com/STMicroelectronics/stm32n6570-dk-bsp/pull/3)
 into the BSP.
 
 It worked either way, so the question was how much it cost. This rebuilds that situation
