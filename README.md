@@ -12,12 +12,12 @@ I hit this on an STM32N6 board and wanted to know what it actually costs.
 
 On the STM32N6 each GPDMA channel picks which of the controller's two master ports carries
 its source and which carries its destination. ST's AN5593 (section 2.3) says to put the
-peripheral on port 0, which has the direct path to the APB bridge, and memory on port 1.
-The STM32N6570-DK BSP had the SAI TX channel the other way round, memory on port 0 and the
-SAI on port 1. I tracked it down and
+peripheral on port 0 and memory on port 1. The STM32N6570-DK BSP had the SAI TX channel the
+other way round, memory on port 0 and the SAI on port 1. I tracked it down and
 [reported it to ST](https://github.com/STMicroelectronics/stm32n6570-dk-bsp/issues/2), and
-they've since [merged the fix](https://github.com/STMicroelectronics/stm32n6570-dk-bsp/pull/3)
-into the BSP.
+they [merged the fix](https://github.com/STMicroelectronics/stm32n6570-dk-bsp/pull/3), but
+the v1.4.1 release
+[put the old line back](https://github.com/STMicroelectronics/stm32n6570-dk-bsp/commit/85a2cd33b72453c6b97bf54cc5fc41dc4088d76d).
 
 It worked either way, so the question was how much it cost. This rebuilds that situation
 in RTL so I could measure it instead of guessing, and `board/` then measures it on the chip.
